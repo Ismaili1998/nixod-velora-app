@@ -1,16 +1,17 @@
 // pages/Invoices/InvoicesPage.jsx
-import React, { useState } from "react";
-import {
-  Input,
-  Button,
-  Table,
-  Tag,
-  Dropdown,
-  Select,
-  DatePicker,
+import React, { useState } from 'react';
+import { 
+  Input, 
+  Button, 
+  Table, 
+  Tag, 
+  Dropdown, 
+  Select, 
+  DatePicker, 
   Space,
   Badge,
-} from "antd";
+  Segmented
+} from 'antd';
 import {
   SearchOutlined,
   FilterOutlined,
@@ -21,232 +22,248 @@ import {
   MessageOutlined,
   HourglassOutlined,
   CalendarOutlined,
-} from "@ant-design/icons";
-import StatsCard from "@/components/StatsCard";
+  AppstoreOutlined,
+  UnorderedListOutlined
+} from '@ant-design/icons';
+import StatsCard from '@/components/StatsCard';
+import DocCard from '@/components/DocCard';
+import DocCardSkeleton from '@/components/DocCardSkeleton';
 
 const { RangePicker } = DatePicker;
 
 const InvoicesPage = () => {
-  const [selectedTab, setSelectedTab] = useState("all");
-  const [searchValue, setSearchValue] = useState("");
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'table'
+  const [selectedTab, setSelectedTab] = useState('all');
+  const [searchValue, setSearchValue] = useState('');
   const [filterVisible, setFilterVisible] = useState(false);
   const [filters, setFilters] = useState({
-    customer: "all",
-    status: "all",
-    dateRange: null,
+    customer: 'all',
+    status: 'all',
+    dateRange: null
   });
 
   // Stats data
   const stats = [
     {
       icon: <ClockCircleOutlined className="text-2xl" />,
-      value: "$60,400",
-      label: "Overdue amount",
-      color: "black",
+      value: '$60,400',
+      label: 'Overdue amount',
+      color: 'bg-orange-50',
+      iconColor: 'text-orange-500'
     },
     {
       icon: <FileTextOutlined className="text-2xl" />,
-      value: "$60,400",
-      label: "Drafted totals",
-      color: "black",
+      value: '$60,400',
+      label: 'Drafted totals',
+      color: 'bg-blue-50',
+      iconColor: 'text-blue-500'
     },
     {
       icon: <MessageOutlined className="text-2xl" />,
-      value: "$60,400",
-      label: "Unpaid totals",
-      color: "black",
+      value: '$60,400',
+      label: 'Unpaid totals',
+      color: 'bg-purple-50',
+      iconColor: 'text-purple-500'
     },
     {
       icon: <HourglassOutlined className="text-2xl" />,
-      value: "08",
-      label: "Average paid time",
-      suffix: "days",
-      color: "black",
+      value: '08',
+      label: 'Average paid time',
+      suffix: 'days',
+      color: 'bg-green-50',
+      iconColor: 'text-green-500'
     },
     {
       icon: <CalendarOutlined className="text-2xl" />,
-      value: "05",
-      label: "Scheduled for today",
-      suffix: "invoices",
-      color: "bg-indigo-50",
-    },
+      value: '05',
+      label: 'Scheduled for today',
+      suffix: 'invoices',
+      color: 'bg-indigo-50',
+      iconColor: 'text-indigo-500'
+    }
   ];
 
   // Mock data
   const invoices = [
-    {
-      id: 1,
-      status: "paid",
-      date: "23.05.2023",
-      number: "#054",
-      customer: "Jane Cooper",
-      total: 2800,
+    { 
+      id: 1, 
+      status: 'paid', 
+      date: '23.05.2023', 
+      number: '#054', 
+      customer: 'Jane Cooper', 
+      customerEmail: 'jane.cooper@example.com',
+      total: 280000, 
       amount: null,
+      dueDate: '30.05.2023',
+      items: 5
     },
-    {
-      id: 2,
-      status: "paid",
-      date: "23.05.2023",
-      number: "#054",
-      customer: "Esther Howard",
-      total: 2800,
+    { 
+      id: 2, 
+      status: 'paid', 
+      date: '23.05.2023', 
+      number: '#055', 
+      customer: 'Esther Howard', 
+      customerEmail: 'esther.howard@example.com',
+      total: 2800, 
       amount: null,
+      dueDate: '30.05.2023',
+      items: 3
     },
-    {
-      id: 3,
-      status: "draft",
-      date: "23.05.2023",
-      number: "#054",
-      customer: "Cameron Williamson",
-      total: 2800,
+    { 
+      id: 3, 
+      status: 'draft', 
+      date: '23.05.2023', 
+      number: '#056', 
+      customer: 'Cameron Williamson', 
+      customerEmail: 'cameron.w@example.com',
+      total: 2800, 
       amount: null,
+      dueDate: '30.05.2023',
+      items: 7
     },
-    {
-      id: 4,
-      status: "paid",
-      date: "23.05.2023",
-      number: "#054",
-      customer: "Brooklyn Simmons",
-      total: 2800,
+    { 
+      id: 4, 
+      status: 'paid', 
+      date: '23.05.2023', 
+      number: '#057', 
+      customer: 'Brooklyn Simmons', 
+      customerEmail: 'brooklyn.s@example.com',
+      total: 2800, 
       amount: 400,
+      dueDate: '30.05.2023',
+      items: 4
     },
-    {
-      id: 5,
-      status: "overdue",
-      date: "23.05.2023",
-      number: "#054",
-      customer: "Leslie Alexander",
-      total: 2800,
+    { 
+      id: 5, 
+      status: 'overdue', 
+      date: '23.05.2023', 
+      number: '#058', 
+      customer: 'Leslie Alexander', 
+      customerEmail: 'leslie.a@example.com',
+      total: 2800, 
       amount: 400,
+      dueDate: '15.05.2023',
+      items: 6
     },
-    {
-      id: 6,
-      status: "overdue",
-      date: "23.05.2023",
-      number: "#054",
-      customer: "Arlene McCoy",
-      total: 2800,
+    { 
+      id: 6, 
+      status: 'overdue', 
+      date: '23.05.2023', 
+      number: '#059', 
+      customer: 'Arlene McCoy', 
+      customerEmail: 'arlene.m@example.com',
+      total: 2800, 
       amount: 400,
+      dueDate: '18.05.2023',
+      items: 2
     },
-    {
-      id: 7,
-      status: "overdue",
-      date: "23.05.2023",
-      number: "#054",
-      customer: "Marvin McKinney",
-      total: 2800,
+    { 
+      id: 7, 
+      status: 'overdue', 
+      date: '23.05.2023', 
+      number: '#060', 
+      customer: 'Marvin McKinney', 
+      customerEmail: 'marvin.m@example.com',
+      total: 2800, 
       amount: 400,
+      dueDate: '20.05.2023',
+      items: 8
     },
-    {
-      id: 8,
-      status: "overdue",
-      date: "23.05.2023",
-      number: "#054",
-      customer: "Kathryn Murphy",
-      total: 2800,
+    { 
+      id: 8, 
+      status: 'unpaid', 
+      date: '23.05.2023', 
+      number: '#061', 
+      customer: 'Kathryn Murphy', 
+      customerEmail: 'kathryn.m@example.com',
+      total: 2800, 
       amount: 400,
+      dueDate: '25.05.2023',
+      items: 5
     },
   ];
 
   // Table columns
   const columns = [
     {
-      title: "STATUS",
-      dataIndex: "status",
-      key: "status",
+      title: 'STATUS',
+      dataIndex: 'status',
+      key: 'status',
       width: 120,
       render: (status) => {
         const statusConfig = {
-          paid: {
-            color: "success",
-            text: "Paid",
-            className: "bg-green-100 text-green-700 border-0",
-          },
-          draft: {
-            color: "default",
-            text: "Draft",
-            className: "bg-gray-100 text-gray-700 border-0",
-          },
-          overdue: {
-            color: "warning",
-            text: "Overdue",
-            className: "bg-orange-100 text-orange-700 border-0",
-          },
-          unpaid: {
-            color: "error",
-            text: "Unpaid",
-            className: "bg-red-100 text-red-700 border-0",
-          },
+          paid: { color: 'success', text: 'Paid', className: 'bg-green-100 text-green-700 border-0' },
+          draft: { color: 'default', text: 'Draft', className: 'bg-gray-100 text-gray-700 border-0' },
+          overdue: { color: 'warning', text: 'Overdue', className: 'bg-orange-100 text-orange-700 border-0' },
+          unpaid: { color: 'error', text: 'Unpaid', className: 'bg-red-100 text-red-700 border-0' },
         };
         const config = statusConfig[status];
         return (
-          <Tag
-            className={`${config.className} px-3 py-1 rounded-full font-medium`}
-          >
+          <Tag className={`${config.className} px-3 py-1 rounded-full font-medium`}>
             {config.text}
           </Tag>
         );
       },
     },
     {
-      title: "DATE",
-      dataIndex: "date",
-      key: "date",
+      title: 'DATE',
+      dataIndex: 'date',
+      key: 'date',
       sorter: true,
       width: 150,
     },
     {
-      title: "NUMBER",
-      dataIndex: "number",
-      key: "number",
+      title: 'NUMBER',
+      dataIndex: 'number',
+      key: 'number',
       width: 120,
     },
     {
-      title: "CUSTOMER",
-      dataIndex: "customer",
-      key: "customer",
+      title: 'CUSTOMER',
+      dataIndex: 'customer',
+      key: 'customer',
     },
     {
-      title: "TOTAL",
-      dataIndex: "total",
-      key: "total",
+      title: 'TOTAL',
+      dataIndex: 'total',
+      key: 'total',
       width: 120,
       render: (total) => `$${total}`,
     },
     {
-      title: "",
-      dataIndex: "amount",
-      key: "amount",
+      title: '',
+      dataIndex: 'amount',
+      key: 'amount',
       width: 100,
-      render: (amount) => (amount ? `$${amount}` : null),
+      render: (amount) => amount ? `$${amount}` : null,
     },
     {
-      title: "",
-      key: "actions",
+      title: '',
+      key: 'actions',
       width: 80,
       render: (_, record) => (
         <Space size="small">
-          <Button
-            type="text"
-            icon={<DownOutlined />}
+          <Button 
+            type="text" 
+            icon={<DownOutlined />} 
             size="small"
             className="text-gray-400 hover:text-gray-600"
           />
           <Dropdown
             menu={{
               items: [
-                { key: "view", label: "View Details" },
-                { key: "edit", label: "Edit" },
-                { key: "duplicate", label: "Duplicate" },
-                { type: "divider" },
-                { key: "delete", label: "Delete", danger: true },
+                { key: 'view', label: 'View Details' },
+                { key: 'edit', label: 'Edit' },
+                { key: 'duplicate', label: 'Duplicate' },
+                { type: 'divider' },
+                { key: 'delete', label: 'Delete', danger: true },
               ],
             }}
-            trigger={["click"]}
+            trigger={['click']}
           >
-            <Button
-              type="text"
-              icon={<MoreOutlined />}
+            <Button 
+              type="text" 
+              icon={<MoreOutlined />} 
               size="small"
               className="text-gray-400 hover:text-gray-600"
             />
@@ -258,9 +275,9 @@ const InvoicesPage = () => {
 
   // Tab configuration
   const tabs = [
-    { key: "all", label: "All Invoices", count: 54 },
-    { key: "unpaid", label: "Unpaid", count: 14 },
-    { key: "draft", label: "Draft", count: 3 },
+    { key: 'all', label: 'All Invoices', count: 54 },
+    { key: 'unpaid', label: 'Unpaid', count: 14 },
+    { key: 'draft', label: 'Draft', count: 3 },
   ];
 
   const toggleFilter = () => {
@@ -268,16 +285,19 @@ const InvoicesPage = () => {
   };
 
   const applyFilters = () => {
-    console.log("Applying filters:", filters);
-    // Apply filter logic here
+    console.log('Applying filters:', filters);
   };
 
   const resetFilters = () => {
     setFilters({
-      customer: "all",
-      status: "all",
-      dateRange: null,
+      customer: 'all',
+      status: 'all',
+      dateRange: null
     });
+  };
+
+  const handleInvoiceAction = (action, invoice) => {
+    console.log(`${action} invoice:`, invoice);
   };
 
   return (
@@ -288,15 +308,15 @@ const InvoicesPage = () => {
         <Dropdown
           menu={{
             items: [
-              { key: "new", label: "Create new invoice" },
-              { key: "import", label: "Import invoices" },
-              { key: "template", label: "From template" },
+              { key: 'new', label: 'Create new invoice' },
+              { key: 'import', label: 'Import invoices' },
+              { key: 'template', label: 'From template' },
             ],
           }}
-          trigger={["click"]}
+          trigger={['click']}
         >
-          <Button
-            type="primary"
+          <Button 
+            type="primary" 
             size="large"
             className="bg-blue-600 hover:bg-blue-700 rounded-lg px-6"
           >
@@ -325,29 +345,45 @@ const InvoicesPage = () => {
               className="max-w-md rounded-lg"
               size="large"
             />
-
+            
             <div className="flex items-center gap-3">
+              {/* View Mode Toggle */}
+              <Segmented
+                value={viewMode}
+                onChange={setViewMode}
+                options={[
+                  {
+                    value: 'grid',
+                    icon: <AppstoreOutlined />,
+                  },
+                  {
+                    value: 'table',
+                    icon: <UnorderedListOutlined />,
+                  },
+                ]}
+                className="bg-gray-100"
+              />
+
               {/* Tabs */}
               <div className="flex items-center gap-2">
                 {tabs.map((tab) => (
                   <Button
                     key={tab.key}
-                    type={selectedTab === tab.key ? "primary" : "text"}
+                    type={selectedTab === tab.key ? 'primary' : 'text'}
                     onClick={() => setSelectedTab(tab.key)}
                     className={`rounded-lg ${
-                      selectedTab === tab.key
-                        ? "bg-blue-50 text-blue-600 border-blue-200"
-                        : "text-gray-600 hover:bg-gray-50"
+                      selectedTab === tab.key 
+                        ? 'bg-blue-50 text-blue-600 border-blue-200' 
+                        : 'text-gray-600 hover:bg-gray-50'
                     }`}
                   >
                     {tab.label}
-                    <Badge
-                      count={tab.count}
+                    <Badge 
+                      count={tab.count} 
                       className="ml-2"
-                      style={{
-                        backgroundColor:
-                          selectedTab === tab.key ? "#3b82f6" : "#e5e7eb",
-                        color: selectedTab === tab.key ? "white" : "#6b7280",
+                      style={{ 
+                        backgroundColor: selectedTab === tab.key ? '#3b82f6' : '#e5e7eb',
+                        color: selectedTab === tab.key ? 'white' : '#6b7280'
                       }}
                     />
                   </Button>
@@ -371,10 +407,10 @@ const InvoicesPage = () => {
                 size="large"
                 className="w-40"
                 options={[
-                  { value: "newest", label: "Newest First" },
-                  { value: "oldest", label: "Oldest First" },
-                  { value: "amount-high", label: "Amount: High to Low" },
-                  { value: "amount-low", label: "Amount: Low to High" },
+                  { value: 'newest', label: 'Newest First' },
+                  { value: 'oldest', label: 'Oldest First' },
+                  { value: 'amount-high', label: 'Amount: High to Low' },
+                  { value: 'amount-low', label: 'Amount: Low to High' },
                 ]}
               />
             </div>
@@ -388,14 +424,12 @@ const InvoicesPage = () => {
                   placeholder="All Customers"
                   size="large"
                   value={filters.customer}
-                  onChange={(value) =>
-                    setFilters({ ...filters, customer: value })
-                  }
+                  onChange={(value) => setFilters({ ...filters, customer: value })}
                   className="w-full"
                   options={[
-                    { value: "all", label: "All Customers" },
-                    { value: "jane", label: "Jane Cooper" },
-                    { value: "esther", label: "Esther Howard" },
+                    { value: 'all', label: 'All Customers' },
+                    { value: 'jane', label: 'Jane Cooper' },
+                    { value: 'esther', label: 'Esther Howard' },
                   ]}
                 />
 
@@ -403,33 +437,29 @@ const InvoicesPage = () => {
                   placeholder="All Statuses"
                   size="large"
                   value={filters.status}
-                  onChange={(value) =>
-                    setFilters({ ...filters, status: value })
-                  }
+                  onChange={(value) => setFilters({ ...filters, status: value })}
                   className="w-full"
                   options={[
-                    { value: "all", label: "All Statuses" },
-                    { value: "paid", label: "Paid" },
-                    { value: "unpaid", label: "Unpaid" },
-                    { value: "draft", label: "Draft" },
-                    { value: "overdue", label: "Overdue" },
+                    { value: 'all', label: 'All Statuses' },
+                    { value: 'paid', label: 'Paid' },
+                    { value: 'unpaid', label: 'Unpaid' },
+                    { value: 'draft', label: 'Draft' },
+                    { value: 'overdue', label: 'Overdue' },
                   ]}
                 />
 
                 <RangePicker
-                  placeholder={["From", "To"]}
+                  placeholder={['From', 'To']}
                   size="large"
                   className="w-full"
                   value={filters.dateRange}
-                  onChange={(dates) =>
-                    setFilters({ ...filters, dateRange: dates })
-                  }
+                  onChange={(dates) => setFilters({ ...filters, dateRange: dates })}
                 />
               </div>
 
               <div className="flex gap-2">
-                <Button
-                  type="primary"
+                <Button 
+                  type="primary" 
                   onClick={applyFilters}
                   className="rounded-lg"
                 >
@@ -443,20 +473,39 @@ const InvoicesPage = () => {
           )}
         </div>
 
-        {/* Table */}
-        <Table
-          columns={columns}
-          size="small"
-          dataSource={invoices}
-          rowKey="id"
-          pagination={{
-            pageSize: 10,
-            showSizeChanger: true,
-            showTotal: (total) => `Total ${total} invoices`,
-            position: ["bottomRight"],
-          }}
-          className="invoice-table"
+{/* Content - Table or Grid View */}
+{viewMode === 'table' ? (
+  <Table
+    columns={columns}
+    dataSource={invoices}
+    rowKey="id"
+    pagination={{
+      pageSize: 10,
+      showSizeChanger: true,
+      showTotal: (total) => `Total ${total} invoices`,
+      position: ['bottomCenter'],
+    }}
+    className="invoice-table"
+  />
+) : (
+  <div className="p-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
+      {invoices.map((invoice) => (
+        <DocCard 
+          key={invoice.id} 
+          doc={invoice} 
+          onAction={handleInvoiceAction}
         />
+      ))}
+       <>
+          <DocCardSkeleton />
+          <DocCardSkeleton />
+          <DocCardSkeleton />
+          <DocCardSkeleton />
+        </>
+    </div>
+  </div>
+)}
       </div>
     </div>
   );

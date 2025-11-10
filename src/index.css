@@ -1,3 +1,202 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* styles/invoices.css */
+
+/* Table Styles */
+.invoice-table .ant-table-thead > tr > th {
+  background-color: transparent;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #f3f4f6;
+  padding: 16px;
+}
+
+.invoice-table .ant-table-tbody > tr > td {
+  padding: 20px 16px;
+  font-size: 14px;
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.invoice-table .ant-table-tbody > tr:hover > td {
+  background-color: #f9fafb;
+}
+
+.invoice-table .ant-table-tbody > tr:last-child > td {
+  border-bottom: none;
+}
+
+/* Document Card Styles */
+.invoice-card-wrapper {
+  position: relative;
+  transform: translateY(0);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.invoice-card-wrapper:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.invoice-card {
+  /* Paper texture effect */
+  background: 
+    linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px),
+    linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 4px 8px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.invoice-card:hover {
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 16px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Smooth fade-in animation for cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.invoice-card-wrapper {
+  animation: fadeInUp 0.5s ease-out backwards;
+}
+
+/* Staggered animation for multiple cards */
+.invoice-card-wrapper:nth-child(1) { animation-delay: 0.05s; }
+.invoice-card-wrapper:nth-child(2) { animation-delay: 0.1s; }
+.invoice-card-wrapper:nth-child(3) { animation-delay: 0.15s; }
+.invoice-card-wrapper:nth-child(4) { animation-delay: 0.2s; }
+.invoice-card-wrapper:nth-child(5) { animation-delay: 0.25s; }
+.invoice-card-wrapper:nth-child(6) { animation-delay: 0.3s; }
+.invoice-card-wrapper:nth-child(7) { animation-delay: 0.35s; }
+.invoice-card-wrapper:nth-child(8) { animation-delay: 0.4s; }
+
+/* Stamp rotation animation on hover */
+.invoice-card-wrapper:hover .rotate-12 {
+  transform: rotate(15deg) scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.invoice-card-wrapper:hover .-rotate-12 {
+  transform: rotate(-15deg) scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+/* Paper fold corner effect */
+.invoice-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 25px 25px 0;
+  border-color: transparent #f3f4f6 transparent transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.invoice-card:hover::before {
+  opacity: 0.5;
+}
+
+/* Segmented control styling */
+.ant-segmented {
+  background: #f3f4f6;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.ant-segmented-item-selected {
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Document-style borders */
+.invoice-card {
+  border-left: 4px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.invoice-card:hover {
+  border-left-color: #3b82f6;
+}
+
+
+/* styles/invoices.css - Add to existing file */
+
+/* Modern Dropdown Menu Styles */
+.modern-dropdown-overlay .ant-dropdown {
+  padding: 0;
+}
+
+.modern-dropdown-menu {
+  padding: 8px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+  min-width: 280px !important;
+  background: white;
+}
+
+.modern-dropdown-menu .ant-dropdown-menu-item {
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.modern-dropdown-menu .ant-dropdown-menu-item:hover {
+  background: #f9fafb !important;
+  transform: translateX(4px);
+}
+
+.modern-dropdown-menu .ant-dropdown-menu-item-danger:hover {
+  background: #fef2f2 !important;
+}
+
+.modern-dropdown-menu .ant-dropdown-menu-item-divider {
+  margin: 8px 0 !important;
+  background: #f3f4f6 !important;
+}
+
+/* Smooth animation for dropdown */
+.modern-dropdown-overlay .ant-dropdown {
+  animation: dropdownSlideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dropdownSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icon container animations */
+.modern-dropdown-menu .ant-dropdown-menu-item:hover [class*="bg-"] {
+  transform: scale(1.1) rotate(5deg);
+  transition: transform 0.2s ease;
+}
+
+/* Rest of previous styles... */

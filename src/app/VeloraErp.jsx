@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Layout } from "antd";
 import Sidebar from "./Navigation/Sidebar.jsx";
 import AppHeader from "./Header/Header.jsx";
-import Invoice from "@/modules/invoice";
+import Invoice from "@/modules/Invoice";
 
 const { Content } = Layout;
 
