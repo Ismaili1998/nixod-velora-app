@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Document,
   Page,
@@ -7,182 +7,182 @@ import {
   StyleSheet,
   PDFDownloadLink,
   Font,
-} from '@react-pdf/renderer';
+} from "@react-pdf/renderer";
 
 // Create styles for PDF
 const styles = StyleSheet.create({
   page: {
     padding: 50,
     fontSize: 10,
-    fontFamily: 'Helvetica',
+    fontFamily: "Helvetica",
   },
   colorStrip: {
     height: 8,
-    background: 'linear-gradient(90deg, #14b8a6 0%, #3b82f6 100%)',
+    background: "linear-gradient(90deg, #14b8a6 0%, #3b82f6 100%)",
     marginBottom: 30,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 40,
   },
   invoiceTitle: {
     fontSize: 36,
-    fontWeight: 'bold',
-    color: '#1e293b',
+    fontWeight: "bold",
+    color: "#1e293b",
     marginBottom: 8,
   },
   invoiceNumber: {
     fontSize: 11,
-    color: '#64748b',
+    color: "#64748b",
   },
   dateSection: {
-    textAlign: 'right',
+    textAlign: "right",
   },
   dateRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
     marginBottom: 6,
   },
   dateLabel: {
-    color: '#64748b',
-    fontWeight: 'bold',
+    color: "#64748b",
+    fontWeight: "bold",
     marginRight: 8,
   },
   dateValue: {
-    color: '#1e293b',
+    color: "#1e293b",
   },
   addressSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 40,
   },
   addressBlock: {
-    width: '45%',
+    width: "45%",
   },
   addressLabel: {
     fontSize: 9,
-    fontWeight: 'bold',
-    color: '#14b8a6',
+    fontWeight: "bold",
+    color: "#14b8a6",
     letterSpacing: 1,
     marginBottom: 8,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   addressName: {
     fontSize: 13,
-    fontWeight: 'bold',
-    color: '#1e293b',
+    fontWeight: "bold",
+    color: "#1e293b",
     marginBottom: 4,
   },
   addressLine: {
     fontSize: 10,
-    color: '#64748b',
+    color: "#64748b",
     marginBottom: 2,
   },
   table: {
     marginBottom: 20,
   },
   tableHeader: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderBottomWidth: 2,
-    borderBottomColor: '#14b8a6',
+    borderBottomColor: "#14b8a6",
     paddingBottom: 8,
     marginBottom: 8,
   },
   tableHeaderCell: {
     fontSize: 9,
-    fontWeight: 'bold',
-    color: '#475569',
-    textTransform: 'uppercase',
+    fontWeight: "bold",
+    color: "#475569",
+    textTransform: "uppercase",
     letterSpacing: 0.5,
   },
   tableRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: '#e2e8f0',
+    borderBottomColor: "#e2e8f0",
     paddingVertical: 12,
   },
   tableCell: {
     fontSize: 10,
-    color: '#1e293b',
+    color: "#1e293b",
   },
   descriptionCell: {
-    width: '50%',
-    fontWeight: 'bold',
+    width: "50%",
+    fontWeight: "bold",
   },
   quantityCell: {
-    width: '15%',
-    textAlign: 'right',
+    width: "15%",
+    textAlign: "right",
   },
   rateCell: {
-    width: '17.5%',
-    textAlign: 'right',
+    width: "17.5%",
+    textAlign: "right",
   },
   amountCell: {
-    width: '17.5%',
-    textAlign: 'right',
-    fontWeight: 'bold',
+    width: "17.5%",
+    textAlign: "right",
+    fontWeight: "bold",
   },
   totalsSection: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
     marginTop: 20,
     marginBottom: 30,
   },
   totalsBox: {
-    width: '40%',
+    width: "40%",
   },
   totalRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 8,
-    color: '#64748b',
+    color: "#64748b",
   },
   totalLabel: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   totalValue: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   divider: {
     borderBottomWidth: 1,
-    borderBottomColor: '#e2e8f0',
+    borderBottomColor: "#e2e8f0",
     marginVertical: 8,
   },
   grandTotalRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     fontSize: 14,
-    color: '#1e293b',
+    color: "#1e293b",
   },
   grandTotalLabel: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   grandTotalValue: {
-    fontWeight: 'bold',
-    color: '#14b8a6',
+    fontWeight: "bold",
+    color: "#14b8a6",
   },
   notesSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: '#e2e8f0',
+    borderTopColor: "#e2e8f0",
   },
   notesBlock: {
-    width: '47%',
+    width: "47%",
   },
   notesTitle: {
     fontSize: 9,
-    fontWeight: 'bold',
-    color: '#475569',
-    textTransform: 'uppercase',
+    fontWeight: "bold",
+    color: "#475569",
+    textTransform: "uppercase",
     letterSpacing: 0.5,
     marginBottom: 6,
   },
   notesText: {
     fontSize: 9,
-    color: '#64748b',
+    color: "#64748b",
     lineHeight: 1.4,
   },
 });
@@ -219,13 +219,13 @@ const InvoicePDF = ({ invoiceData }) => {
             <View style={styles.dateRow}>
               <Text style={styles.dateLabel}>Date:</Text>
               <Text style={styles.dateValue}>
-                {invoiceData.date.format('MMM DD, YYYY')}
+                {invoiceData.date.format("MMM DD, YYYY")}
               </Text>
             </View>
             <View style={styles.dateRow}>
               <Text style={styles.dateLabel}>Due Date:</Text>
               <Text style={styles.dateValue}>
-                {invoiceData.dueDate.format('MMM DD, YYYY')}
+                {invoiceData.dueDate.format("MMM DD, YYYY")}
               </Text>
             </View>
           </View>
@@ -336,7 +336,7 @@ export const InvoicePDFDownloadButton = ({ invoiceData, children }) => (
     fileName={`invoice-${invoiceData.invoiceNumber}.pdf`}
   >
     {({ blob, url, loading, error }) =>
-      loading ? 'Generating PDF...' : children || 'Download PDF'
+      loading ? "Generating PDF..." : children || "Download PDF"
     }
   </PDFDownloadLink>
 );

@@ -1,12 +1,5 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Input,
-  DatePicker,
-  InputNumber,
-  Divider,
-  message,
-} from 'antd';
+import React, { useState } from "react";
+import { Button, Input, DatePicker, InputNumber, Divider, message } from "antd";
 import {
   DownloadOutlined,
   PlusOutlined,
@@ -23,53 +16,53 @@ import {
   MenuOutlined,
   LayoutOutlined,
   StarOutlined,
-} from '@ant-design/icons';
-import dayjs from 'dayjs';
-import { InvoicePDFDownloadButton } from './InvoicePDF';
+} from "@ant-design/icons";
+import dayjs from "dayjs";
+import { InvoicePDFDownloadButton } from "./InvoicePDF";
 
 const { TextArea } = Input;
 
 export default function InvoiceCreator() {
   const [invoiceData, setInvoiceData] = useState({
-    invoiceNumber: 'INV-001',
+    invoiceNumber: "INV-001",
     date: dayjs(),
-    dueDate: dayjs().add(30, 'day'),
+    dueDate: dayjs().add(30, "day"),
     from: {
-      name: 'Your Company Name',
-      address: '123 Business Street',
-      city: 'New York, NY 10001',
-      email: 'hello@yourcompany.com',
-      phone: '+1 (555) 123-4567',
+      name: "Your Company Name",
+      address: "123 Business Street",
+      city: "New York, NY 10001",
+      email: "hello@yourcompany.com",
+      phone: "+1 (555) 123-4567",
     },
     to: {
-      name: 'Client Company Name',
-      address: '456 Client Avenue',
-      city: 'Los Angeles, CA 90001',
-      email: 'contact@clientcompany.com',
-      phone: '+1 (555) 987-6543',
+      name: "Client Company Name",
+      address: "456 Client Avenue",
+      city: "Los Angeles, CA 90001",
+      email: "contact@clientcompany.com",
+      phone: "+1 (555) 987-6543",
     },
     items: [
       {
         id: 1,
-        description: 'Web Design Services',
+        description: "Web Design Services",
         quantity: 1,
         rate: 2500,
         amount: 2500,
       },
       {
         id: 2,
-        description: 'Frontend Development',
+        description: "Frontend Development",
         quantity: 40,
         rate: 100,
         amount: 4000,
       },
     ],
-    notes: 'Thank you for your business!',
-    terms: 'Payment is due within 30 days',
+    notes: "Thank you for your business!",
+    terms: "Payment is due within 30 days",
     taxRate: 10,
   });
 
-  const [selectedTemplate, setSelectedTemplate] = useState('modern');
+  const [selectedTemplate, setSelectedTemplate] = useState("modern");
 
   const calculateSubtotal = () => {
     return invoiceData.items.reduce((sum, item) => sum + item.amount, 0);
@@ -86,7 +79,7 @@ export default function InvoiceCreator() {
   const updateInvoiceData = (path, value) => {
     setInvoiceData((prev) => {
       const newData = { ...prev };
-      const keys = path.split('.');
+      const keys = path.split(".");
       let current = newData;
       for (let i = 0; i < keys.length - 1; i++) {
         current = current[keys[i]];
@@ -99,7 +92,7 @@ export default function InvoiceCreator() {
   const addItem = () => {
     const newItem = {
       id: Date.now(),
-      description: 'New Item',
+      description: "New Item",
       quantity: 1,
       rate: 0,
       amount: 0,
@@ -116,7 +109,7 @@ export default function InvoiceCreator() {
       items: prev.items.map((item) => {
         if (item.id === id) {
           const updated = { ...item, [field]: value };
-          if (field === 'quantity' || field === 'rate') {
+          if (field === "quantity" || field === "rate") {
             updated.amount = updated.quantity * updated.rate;
           }
           return updated;
@@ -133,7 +126,12 @@ export default function InvoiceCreator() {
     }));
   };
 
-  const EditableText = ({ value, onChange, className = '', multiline = false }) => {
+  const EditableText = ({
+    value,
+    onChange,
+    className = "",
+    multiline = false,
+  }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [tempValue, setTempValue] = useState(value);
 
@@ -172,7 +170,7 @@ export default function InvoiceCreator() {
         }}
         className={`cursor-pointer hover:bg-blue-50 rounded px-2 py-1 transition-colors ${className}`}
       >
-        {value || 'Click to edit'}
+        {value || "Click to edit"}
       </div>
     );
   };
@@ -187,7 +185,9 @@ export default function InvoiceCreator() {
               <div className="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
                 <FileTextOutlined className="text-white text-xl" />
               </div>
-              <span className="text-white text-xl font-semibold">InvoiceBuilder</span>
+              <span className="text-white text-xl font-semibold">
+                InvoiceBuilder
+              </span>
             </div>
             <div className="flex items-center gap-1 ml-6">
               <Button
@@ -293,11 +293,11 @@ export default function InvoiceCreator() {
             </h3>
             <div className="space-y-3">
               <div
-                onClick={() => setSelectedTemplate('modern')}
+                onClick={() => setSelectedTemplate("modern")}
                 className={`relative rounded-lg overflow-hidden cursor-pointer transition-all ${
-                  selectedTemplate === 'modern'
-                    ? 'ring-2 ring-teal-500 shadow-lg'
-                    : 'hover:ring-2 hover:ring-slate-600'
+                  selectedTemplate === "modern"
+                    ? "ring-2 ring-teal-500 shadow-lg"
+                    : "hover:ring-2 hover:ring-slate-600"
                 }`}
               >
                 <div className="bg-white p-4 h-32">
@@ -310,11 +310,11 @@ export default function InvoiceCreator() {
                 </div>
               </div>
               <div
-                onClick={() => setSelectedTemplate('classic')}
+                onClick={() => setSelectedTemplate("classic")}
                 className={`relative rounded-lg overflow-hidden cursor-pointer transition-all ${
-                  selectedTemplate === 'classic'
-                    ? 'ring-2 ring-teal-500 shadow-lg'
-                    : 'hover:ring-2 hover:ring-slate-600'
+                  selectedTemplate === "classic"
+                    ? "ring-2 ring-teal-500 shadow-lg"
+                    : "hover:ring-2 hover:ring-slate-600"
                 }`}
               >
                 <div className="bg-white p-4 h-32">
@@ -327,11 +327,11 @@ export default function InvoiceCreator() {
                 </div>
               </div>
               <div
-                onClick={() => setSelectedTemplate('minimal')}
+                onClick={() => setSelectedTemplate("minimal")}
                 className={`relative rounded-lg overflow-hidden cursor-pointer transition-all ${
-                  selectedTemplate === 'minimal'
-                    ? 'ring-2 ring-teal-500 shadow-lg'
-                    : 'hover:ring-2 hover:ring-slate-600'
+                  selectedTemplate === "minimal"
+                    ? "ring-2 ring-teal-500 shadow-lg"
+                    : "hover:ring-2 hover:ring-slate-600"
                 }`}
               >
                 <div className="bg-white p-4 h-32">
@@ -356,12 +356,14 @@ export default function InvoiceCreator() {
               {/* Invoice Header */}
               <div className="flex items-start justify-between mb-12">
                 <div>
-                  <h1 className="text-5xl font-bold text-slate-800 mb-2">INVOICE</h1>
+                  <h1 className="text-5xl font-bold text-slate-800 mb-2">
+                    INVOICE
+                  </h1>
                   <div className="flex items-center gap-2 text-slate-600">
                     <span className="font-medium">No:</span>
                     <EditableText
                       value={invoiceData.invoiceNumber}
-                      onChange={(v) => updateInvoiceData('invoiceNumber', v)}
+                      onChange={(v) => updateInvoiceData("invoiceNumber", v)}
                       className="font-semibold"
                     />
                   </div>
@@ -371,17 +373,19 @@ export default function InvoiceCreator() {
                     <span className="text-slate-600 font-medium">Date:</span>
                     <DatePicker
                       value={invoiceData.date}
-                      onChange={(v) => updateInvoiceData('date', v)}
+                      onChange={(v) => updateInvoiceData("date", v)}
                       format="MMM DD, YYYY"
                       bordered={false}
                       className="hover:bg-blue-50 rounded"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-600 font-medium">Due Date:</span>
+                    <span className="text-slate-600 font-medium">
+                      Due Date:
+                    </span>
                     <DatePicker
                       value={invoiceData.dueDate}
-                      onChange={(v) => updateInvoiceData('dueDate', v)}
+                      onChange={(v) => updateInvoiceData("dueDate", v)}
                       format="MMM DD, YYYY"
                       bordered={false}
                       className="hover:bg-blue-50 rounded"
@@ -399,27 +403,27 @@ export default function InvoiceCreator() {
                   <div className="space-y-1">
                     <EditableText
                       value={invoiceData.from.name}
-                      onChange={(v) => updateInvoiceData('from.name', v)}
+                      onChange={(v) => updateInvoiceData("from.name", v)}
                       className="font-semibold text-slate-800 text-lg"
                     />
                     <EditableText
                       value={invoiceData.from.address}
-                      onChange={(v) => updateInvoiceData('from.address', v)}
+                      onChange={(v) => updateInvoiceData("from.address", v)}
                       className="text-slate-600 text-sm"
                     />
                     <EditableText
                       value={invoiceData.from.city}
-                      onChange={(v) => updateInvoiceData('from.city', v)}
+                      onChange={(v) => updateInvoiceData("from.city", v)}
                       className="text-slate-600 text-sm"
                     />
                     <EditableText
                       value={invoiceData.from.email}
-                      onChange={(v) => updateInvoiceData('from.email', v)}
+                      onChange={(v) => updateInvoiceData("from.email", v)}
                       className="text-slate-600 text-sm"
                     />
                     <EditableText
                       value={invoiceData.from.phone}
-                      onChange={(v) => updateInvoiceData('from.phone', v)}
+                      onChange={(v) => updateInvoiceData("from.phone", v)}
                       className="text-slate-600 text-sm"
                     />
                   </div>
@@ -431,27 +435,27 @@ export default function InvoiceCreator() {
                   <div className="space-y-1">
                     <EditableText
                       value={invoiceData.to.name}
-                      onChange={(v) => updateInvoiceData('to.name', v)}
+                      onChange={(v) => updateInvoiceData("to.name", v)}
                       className="font-semibold text-slate-800 text-lg"
                     />
                     <EditableText
                       value={invoiceData.to.address}
-                      onChange={(v) => updateInvoiceData('to.address', v)}
+                      onChange={(v) => updateInvoiceData("to.address", v)}
                       className="text-slate-600 text-sm"
                     />
                     <EditableText
                       value={invoiceData.to.city}
-                      onChange={(v) => updateInvoiceData('to.city', v)}
+                      onChange={(v) => updateInvoiceData("to.city", v)}
                       className="text-slate-600 text-sm"
                     />
                     <EditableText
                       value={invoiceData.to.email}
-                      onChange={(v) => updateInvoiceData('to.email', v)}
+                      onChange={(v) => updateInvoiceData("to.email", v)}
                       className="text-slate-600 text-sm"
                     />
                     <EditableText
                       value={invoiceData.to.phone}
-                      onChange={(v) => updateInvoiceData('to.phone', v)}
+                      onChange={(v) => updateInvoiceData("to.phone", v)}
                       className="text-slate-600 text-sm"
                     />
                   </div>
@@ -480,11 +484,16 @@ export default function InvoiceCreator() {
                   </thead>
                   <tbody>
                     {invoiceData.items.map((item) => (
-                      <tr key={item.id} className="border-b border-slate-200 hover:bg-slate-50">
+                      <tr
+                        key={item.id}
+                        className="border-b border-slate-200 hover:bg-slate-50"
+                      >
                         <td className="py-4">
                           <Input
                             value={item.description}
-                            onChange={(e) => updateItem(item.id, 'description', e.target.value)}
+                            onChange={(e) =>
+                              updateItem(item.id, "description", e.target.value)
+                            }
                             bordered={false}
                             className="font-medium text-slate-800"
                           />
@@ -492,7 +501,7 @@ export default function InvoiceCreator() {
                         <td className="py-4 text-right">
                           <InputNumber
                             value={item.quantity}
-                            onChange={(v) => updateItem(item.id, 'quantity', v)}
+                            onChange={(v) => updateItem(item.id, "quantity", v)}
                             bordered={false}
                             min={1}
                             className="text-right w-full"
@@ -501,7 +510,7 @@ export default function InvoiceCreator() {
                         <td className="py-4 text-right">
                           <InputNumber
                             value={item.rate}
-                            onChange={(v) => updateItem(item.id, 'rate', v)}
+                            onChange={(v) => updateItem(item.id, "rate", v)}
                             bordered={false}
                             min={0}
                             prefix="$"
@@ -539,14 +548,16 @@ export default function InvoiceCreator() {
                 <div className="w-80 space-y-3">
                   <div className="flex items-center justify-between text-slate-600">
                     <span className="font-medium">Subtotal:</span>
-                    <span className="font-semibold">${calculateSubtotal().toFixed(2)}</span>
+                    <span className="font-semibold">
+                      ${calculateSubtotal().toFixed(2)}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-slate-600">
                     <div className="flex items-center gap-2">
                       <span className="font-medium">Tax:</span>
                       <InputNumber
                         value={invoiceData.taxRate}
-                        onChange={(v) => updateInvoiceData('taxRate', v)}
+                        onChange={(v) => updateInvoiceData("taxRate", v)}
                         min={0}
                         max={100}
                         suffix="%"
@@ -554,7 +565,9 @@ export default function InvoiceCreator() {
                         className="w-20 hover:bg-blue-50 rounded"
                       />
                     </div>
-                    <span className="font-semibold">${calculateTax().toFixed(2)}</span>
+                    <span className="font-semibold">
+                      ${calculateTax().toFixed(2)}
+                    </span>
                   </div>
                   <Divider className="my-2" />
                   <div className="flex items-center justify-between text-slate-800 text-xl">
@@ -574,7 +587,7 @@ export default function InvoiceCreator() {
                   </div>
                   <EditableText
                     value={invoiceData.notes}
-                    onChange={(v) => updateInvoiceData('notes', v)}
+                    onChange={(v) => updateInvoiceData("notes", v)}
                     className="text-slate-600 text-sm"
                     multiline
                   />
@@ -585,7 +598,7 @@ export default function InvoiceCreator() {
                   </div>
                   <EditableText
                     value={invoiceData.terms}
-                    onChange={(v) => updateInvoiceData('terms', v)}
+                    onChange={(v) => updateInvoiceData("terms", v)}
                     className="text-slate-600 text-sm"
                     multiline
                   />
