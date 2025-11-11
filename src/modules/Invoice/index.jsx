@@ -10,7 +10,8 @@ import {
   DatePicker, 
   Space,
   Badge,
-  Segmented
+  Segmented,
+  Modal
 } from 'antd';
 import {
   SearchOutlined,
@@ -23,12 +24,13 @@ import {
   HourglassOutlined,
   CalendarOutlined,
   AppstoreOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  CloseOutlined
 } from '@ant-design/icons';
 import StatsCard from '@/components/StatsCard';
 import DocCard from '@/components/DocCard';
 import DocCardSkeleton from '@/components/DocCardSkeleton';
-
+import DocRoom from './InvoiceCreator';
 const { RangePicker } = DatePicker;
 
 const InvoicesPage = () => {
@@ -36,6 +38,8 @@ const InvoicesPage = () => {
   const [selectedTab, setSelectedTab] = useState('all');
   const [searchValue, setSearchValue] = useState('');
   const [filterVisible, setFilterVisible] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     customer: 'all',
     status: 'all',
@@ -183,6 +187,18 @@ const InvoicesPage = () => {
     },
   ];
 
+  // Handle opening invoice details
+  const handleOpenInvoice = (invoice) => {
+    setSelectedInvoice(invoice);
+    setIsModalOpen(true);
+  };
+
+  // Handle closing modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedInvoice(null);
+  };
+
   // Table columns
   const columns = [
     {
@@ -252,7 +268,7 @@ const InvoicesPage = () => {
           <Dropdown
             menu={{
               items: [
-                { key: 'view', label: 'View Details' },
+                { key: 'view', label: 'View Details', onClick: () => handleOpenInvoice(record) },
                 { key: 'edit', label: 'Edit' },
                 { key: 'duplicate', label: 'Duplicate' },
                 { type: 'divider' },
@@ -297,7 +313,11 @@ const InvoicesPage = () => {
   };
 
   const handleInvoiceAction = (action, invoice) => {
-    console.log(`${action} invoice:`, invoice);
+    if (action === 'view') {
+      handleOpenInvoice(invoice);
+    } else {
+      console.log(`${action} invoice:`, invoice);
+    }
   };
 
   return (
@@ -473,40 +493,84 @@ const InvoicesPage = () => {
           )}
         </div>
 
-{/* Content - Table or Grid View */}
-{viewMode === 'table' ? (
-  <Table
-    columns={columns}
-    dataSource={invoices}
-    rowKey="id"
-    pagination={{
-      pageSize: 10,
-      showSizeChanger: true,
-      showTotal: (total) => `Total ${total} invoices`,
-      position: ['bottomCenter'],
-    }}
-    className="invoice-table"
-  />
-) : (
-  <div className="p-6">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
-      {invoices.map((invoice) => (
-        <DocCard 
-          key={invoice.id} 
-          doc={invoice} 
-          onAction={handleInvoiceAction}
-        />
-      ))}
-       <>
-          <DocCardSkeleton />
-          <DocCardSkeleton />
-          <DocCardSkeleton />
-          <DocCardSkeleton />
-        </>
-    </div>
-  </div>
-)}
+        {/* Content - Table or Grid View */}
+        {viewMode === 'table' ? (
+          <Table
+            columns={columns}
+            dataSource={invoices}
+            rowKey="id"
+            onRow={(record) => ({
+              onClick: () => handleOpenInvoice(record),
+              className: 'cursor-pointer hover:bg-gray-50'
+            })}
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showTotal: (total) => `Total ${total} invoices`,
+              position: ['bottomCenter'],
+            }}
+            className="invoice-table"
+          />
+        ) : (
+          <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
+              {invoices.map((invoice) => (
+                <DocCard 
+                  key={invoice.id} 
+                  doc={invoice} 
+                  onAction={handleInvoiceAction}
+                />
+              ))}
+              <>
+                <DocCardSkeleton />
+                <DocCardSkeleton />
+                <DocCardSkeleton />
+                <DocCardSkeleton />
+              </>
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Full Page Invoice Modal */}
+     <Modal
+  open={isModalOpen}
+  onCancel={handleCloseModal}
+  footer={null}
+  closeIcon={<CloseOutlined className="text-2xl text-white" />}
+  width="calc(100vw - 280px)"
+  style={{
+    top: 0,
+    right: 0,
+    position: 'fixed',
+    height: '100vh',
+    paddingBottom: 0,
+    margin: 0,
+    maxWidth: 'none',
+  }}
+  styles={{
+    body: { 
+      overflowY: 'auto',   // ✅ scroll vertically
+      overflowX: 'hidden', // prevent horizontal scroll
+      padding: 0,
+    },
+    content: {
+      height: '100vh',
+      borderRadius: 0,
+      borderTopLeftRadius: '16px',
+      borderBottomLeftRadius: '16px',
+      padding: 0,
+    },
+  }}
+  centered={false}
+  header={<docHeader/>}
+  destroyOnClose
+>
+  {selectedInvoice && (
+    <DocRoom invoice={selectedInvoice} onClose={handleCloseModal} />
+  )}
+</Modal>
+
     </div>
   );
 };

@@ -19,6 +19,7 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { InvoicePDFDownloadButton } from "./InvoicePDF";
+import docHeader from './docHeader'
 
 const { TextArea } = Input;
 
@@ -177,82 +178,7 @@ export default function InvoiceCreator() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900">
-      {/* Top Navigation Bar */}
-      <div className="bg-slate-800 border-b border-slate-700 px-6 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
-                <FileTextOutlined className="text-white text-xl" />
-              </div>
-              <span className="text-white text-xl font-semibold">
-                InvoiceBuilder
-              </span>
-            </div>
-            <div className="flex items-center gap-1 ml-6">
-              <Button
-                type="text"
-                icon={<UndoOutlined />}
-                className="text-gray-300 hover:text-white hover:bg-slate-700"
-              />
-              <Button
-                type="text"
-                icon={<RedoOutlined />}
-                className="text-gray-300 hover:text-white hover:bg-slate-700"
-              />
-              <Divider type="vertical" className="bg-slate-600 mx-2" />
-              <Button
-                type="text"
-                icon={<LayoutOutlined />}
-                className="text-gray-300 hover:text-white hover:bg-slate-700"
-              />
-              <Button
-                type="text"
-                icon={<FontSizeOutlined />}
-                className="text-gray-300 hover:text-white hover:bg-slate-700"
-              />
-              <Button
-                type="text"
-                icon={<LinkOutlined />}
-                className="text-gray-300 hover:text-white hover:bg-slate-700"
-              />
-              <Button
-                type="text"
-                icon={<SettingOutlined />}
-                className="text-gray-300 hover:text-white hover:bg-slate-700"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <InvoicePDFDownloadButton invoiceData={invoiceData}>
-              <Button
-                type="primary"
-                icon={<DownloadOutlined />}
-                className="bg-teal-500 hover:bg-teal-600 border-0 rounded-full px-6 shadow-lg"
-                size="large"
-              >
-                Download
-                <StarOutlined className="ml-2" />
-              </Button>
-            </InvoicePDFDownloadButton>
-            <Button
-              type="default"
-              className="bg-white text-slate-800 border-0 rounded-full px-6"
-              size="large"
-            >
-              My Invoices
-            </Button>
-            <Button
-              type="text"
-              icon={<MenuOutlined />}
-              className="text-white text-xl"
-              size="large"
-            />
-          </div>
-        </div>
-      </div>
-
+     < docHeader/>
       {/* Text Formatting Toolbar */}
       <div className="bg-slate-800 border-b border-slate-700 px-6 py-2 flex items-center justify-center gap-2">
         <Button

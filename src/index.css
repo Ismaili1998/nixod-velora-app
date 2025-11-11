@@ -2,34 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* styles/invoices.css */
-
-/* Table Styles */
-.invoice-table .ant-table-thead > tr > th {
-  background-color: transparent;
-  font-size: 11px;
-  font-weight: 600;
-  color: #9ca3af;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid #f3f4f6;
-  padding: 16px;
-}
-
-.invoice-table .ant-table-tbody > tr > td {
-  padding: 20px 16px;
-  font-size: 14px;
-  color: #1f2937;
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.invoice-table .ant-table-tbody > tr:hover > td {
-  background-color: #f9fafb;
-}
-
-.invoice-table .ant-table-tbody > tr:last-child > td {
-  border-bottom: none;
-}
 
 /* Document Card Styles */
 .invoice-card-wrapper {
@@ -135,12 +107,6 @@
   border-left: 4px solid transparent;
   transition: border-color 0.3s ease;
 }
-
-.invoice-card:hover {
-  border-left-color: #3b82f6;
-}
-
-
 /* styles/invoices.css - Add to existing file */
 
 /* Modern Dropdown Menu Styles */
@@ -200,3 +166,4 @@
 }
 
 /* Rest of previous styles... */
+

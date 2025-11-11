@@ -17,7 +17,6 @@ import {
   FolderOutlined,
   DownOutlined,
 } from '@ant-design/icons';
-import invoice from "./invoice.jsx"
 import InvoiceCreator from './Invoice/InvoiceCreator.jsx';
 const { Header, Sider, Content } = Layout;
 

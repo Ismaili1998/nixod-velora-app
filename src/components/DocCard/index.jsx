@@ -13,7 +13,8 @@ import {
   DownloadOutlined,
   SendOutlined,
   CopyOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  BankOutlined
 } from '@ant-design/icons';
 
 const DocCard = ({ doc, onAction }) => {
@@ -63,8 +64,8 @@ const DocCard = ({ doc, onAction }) => {
       key: 'view', 
       label: (
         <div className="flex items-center gap-3 px-1 py-1">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50">
-            <EyeOutlined className="text-blue-600" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-50">
+            <EyeOutlined className="text-teal-600" />
           </div>
           <div className="flex-1">
             <div className="text-sm font-medium text-gray-900">View Details</div>
@@ -163,19 +164,19 @@ const DocCard = ({ doc, onAction }) => {
   return (
     <div className="invoice-card-wrapper group h-full">
       <Card
-        className="invoice-card relative overflow-hidden rounded-lg border-2 border-gray-200 hover:border-blue-400 transition-all duration-300 hover:shadow-2xl cursor-pointer bg-white h-full flex flex-col"
+        className="invoice-card relative overflow-hidden rounded-lg transition-all duration-300 hover:shadow-2xl cursor-pointer bg-white h-full flex flex-col"
         bodyStyle={{ padding: 0, display: 'flex', flexDirection: 'column', height: '100%' }}
       >
         {/* Document Header - Company Letterhead Style - FIXED HEIGHT */}
         <div className="relative bg-gradient-to-b from-gray-50 to-white border-b-2 border-gray-200 px-4 py-3 flex-shrink-0 h-[90px]">
           {/* Decorative corner lines */}
-          <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-blue-500 opacity-20" />
-          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-blue-500 opacity-20" />
+          <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-teal-500 opacity-20" />
+          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-teal-500 opacity-20" />
           
           <div className="relative flex justify-between items-start h-full">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5 mb-0.5">
-                <FileTextOutlined className="text-blue-600 text-sm" />
+                <FileTextOutlined className="text-gray-600 text-sm" />
                 <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
                   Invoice
                 </span>
@@ -218,14 +219,14 @@ const DocCard = ({ doc, onAction }) => {
           {/* Bill To Section - FIXED HEIGHT */}
           <div className="mb-3 flex-shrink-0">
             <div className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <div className="w-6 h-0.5 bg-blue-500" />
+              <div className="w-6 h-0.5 bg-gray-500" />
               Bill To
             </div>
             <div className="flex items-start gap-2 bg-gray-50 p-2 rounded border border-gray-100 h-[52px]">
               <Avatar 
                 size={32} 
-                icon={<UserOutlined />} 
-                className="bg-gradient-to-br from-blue-500 to-blue-600 flex-shrink-0 shadow-sm"
+                icon={<BankOutlined  />} 
+                className="bg-gradient-to-br from-teal-500 to-teal-600 flex-shrink-0 shadow-sm"
               />
               <div className="flex-1 min-w-0 overflow-hidden">
                 <h4 className="font-bold text-gray-900 text-xs mb-0.5 truncate" title={customer}>
@@ -261,13 +262,13 @@ const DocCard = ({ doc, onAction }) => {
           </div>
 
           {/* Items Summary - FIXED HEIGHT */}
-          <div className="bg-blue-50 border-2 border-blue-100 rounded p-2 mb-3 flex-shrink-0 h-[40px]">
+          <div className="bg-teal-50 border-2 border-none rounded p-2 mb-3 flex-shrink-0 h-[40px]">
             <div className="flex items-center justify-between h-full">
               <div className="flex items-center gap-1.5">
-                <FileTextOutlined className="text-blue-600 text-xs" />
+                <FileTextOutlined className="text-gray-600 text-xs" />
                 <span className="text-xs font-medium text-gray-700">Line Items</span>
               </div>
-              <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+              <span className="bg-teal-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                 {items}
               </span>
             </div>
@@ -275,10 +276,10 @@ const DocCard = ({ doc, onAction }) => {
 
           {/* Total Section - FIXED HEIGHT - Push to bottom */}
           <div className="border-t-2 border-dashed border-gray-300 pt-3 mt-auto flex-shrink-0">
-            <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded p-3 shadow-md h-[70px]">
+            <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded p-3 shadow-md h-[50px]">
               <div className="flex items-center justify-between h-full">
                 <div className="flex-1 min-w-0">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">
+                  <p className="text-[8px] text-gray-400 uppercase tracking-wider mb-0.5">
                     Total Amount
                   </p>
                   <div className="flex items-baseline gap-1">
@@ -288,14 +289,13 @@ const DocCard = ({ doc, onAction }) => {
                     <span className="text-[10px] text-gray-400 flex-shrink-0">USD</span>
                   </div>
                 </div>
-                <DollarOutlined className="text-3xl text-gray-600 opacity-20 flex-shrink-0" />
               </div>
             </div>
           </div>
         </div>
 
         {/* Document Footer - Subtle pattern - FIXED HEIGHT */}
-        <div className="h-1.5 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 flex-shrink-0" />
+        <div className="h-1 bg-gradient-to-r from-teal-100 via-teal-200 to-teal-200 flex-shrink-0" />
 
         {/* Paper fold effect corner */}
         <div className="absolute top-0 right-0 w-0 h-0 border-t-[15px] border-t-gray-300 border-l-[15px] border-l-transparent opacity-0 group-hover:opacity-30 transition-opacity" />
